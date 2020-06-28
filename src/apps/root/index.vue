@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>{{request_data}}</div>
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
     return {
       height: '0px',
 
+      request_data: '',
       /**
       * dataSources
       **/

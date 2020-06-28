@@ -16,8 +16,9 @@ const nginx_vhosts_error = {
       ]
     }
   },
-  callback: function (tables, metadata, key, vm) {
-    debug('All callback', tables, JSON.parse(JSON.stringify(this)))
+  callback: function (data, metadata, key, vm) {
+    debug('All callback', metadata) //, JSON.parse(JSON.stringify(this))
+    vm.request_data = new Date(metadata.timestamp)
   }
 }
 
