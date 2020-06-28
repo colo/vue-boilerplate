@@ -1,29 +1,46 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Root from '@apps/root'
+
+import routes from './routes'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Root
-  },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
-]
+/*
+ * If not building with SSR mode, you can
+ * directly export the Router instantiation
+ */
 
-const router = new VueRouter({
+// export default function (/* { store, ssrContext } */) {
+//   const Router = new VueRouter({
+//     scrollBehavior: () => ({ x: 0, y: 0 }),
+//     routes,
+//
+//     // Leave these as is and change from quasar.conf.js instead!
+//     // quasar.conf.js -> build -> vueRouterMode
+//     // quasar.conf.js -> build -> publicPath
+//     mode: process.env.VUE_ROUTER_MODE,
+//     base: process.env.VUE_ROUTER_BASE
+//   })
+//
+//   return Router
+// }
+const Router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+  // scrollBehavior: () => ({ x: 0, y: 0 }),
+  scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash
+        // offset: { x: 0, y: 0 }
+      }
+    } else if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
+  routes,
+
 })
 
-export default router
+export default Router
