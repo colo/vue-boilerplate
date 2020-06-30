@@ -1,6 +1,17 @@
 const path = require('path')
 
 module.exports = {
+  chainWebpack: config => {
+    config.module
+      .rule('eslint')
+      .use('eslint-loader')
+        .loader('eslint-loader')
+        .tap(options => {
+          options.formatter = require('eslint').CLIEngine.getFormatter('stylish'),
+          options.fix = true
+          return options
+        })
+  },
   pluginOptions: {
     'resolve-alias': {
       alias: {
